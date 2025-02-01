@@ -194,7 +194,9 @@ a:hover {
     <div class="container">
     <div class="title">
     <div class="user-info">
-        <img src="<?= base_url("/").$active_user['img'] ?>" alt="Profile pic">
+        <a href="<?= base_url("profile");?>">
+            <img src="<?= base_url("/").$active_user['img'] ?>" alt="Profile pic">
+        </a>
         <div>
             <span class="name"><?= $active_user['name']; ?></span>
         </div>

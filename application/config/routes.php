@@ -63,3 +63,12 @@ $route['start'] = 'Chat_controller/start';
 $route['chat/(:num)'] = 'Chat_controller/chat/$1';
 $route['send-message'] = 'Chat_controller/send_message';
 $route['get-message'] = 'Chat_controller/get_msg';
+
+// update Profile
+
+$route['profile'] = 'Chat_controller/get_profile';
+$route['update-profile'] = 'Chat_controller/update_profile';
+
+// Change Password
+
+$route['change-password'] = 'Chat_controller/change_password';

@@ -113,6 +113,12 @@ class Chat_controller extends CI_Controller {
                     'message'=>'User Login successfully.',
                     'redirect'=> base_url('dashboard'),
                 ];
+            }else{
+                $response=[
+                    'status'=>'success',
+                    'message'=>'Credential Not Matched.',
+                    // 'redirect'=> base_url('dashboard'),
+                ];
             }
         }
         echo json_encode($response);
@@ -277,5 +283,95 @@ public function send_message()
         $this->session->sess_destroy();
         redirect('login');
 
+}
+
+public function get_profile(){
+
+   $data['active_user'] = $this->Chat_model->active_user();
+   $this->load->view('update_profile',$data);
+
+}
+
+public function update_profile()
+{
+    $image = null;
+    // print_r($_FILES['img']['name']);die;
+    $this->form_validation->set_rules('name','Name','required');
+    $this->form_validation->set_rules('address','Address','required');
+    $this->form_validation->set_rules('gender','Gender','required');
+    if(!empty($_FILES['img']['name'])){
+
+        $this->form_validation->set_rules('img','image','callback_img_error');
+    }else{
+        $this->image = $this->input->post('old_img');
+    }
+    if($this->form_validation->run()==false){
+        $response=[
+            'status'=>'error',
+            'error'=>$this->form_validation->error_array(),
+        ];
+    }else{
+        $id=$this->security->xss_clean($this->input->post('id'));
+        $name=$this->security->xss_clean($this->input->post('name'));
+        $address=$this->security->xss_clean($this->input->post('address'));
+        $gender=$this->security->xss_clean($this->input->post('gender'));
+
+        $data = array(
+            'name'=> $name,
+            'address'=>$address,
+            'gender'=>$gender,
+            'img'=>$this->image
+
+        );
+
+        $users = $this->Chat_model->update_profile($id, $data);
+        if($users){
+            $response=[
+                'status'=>'success',
+                'message'=>'User Profile update successfully.',
+            ];
+        }
+    }
+    echo json_encode($response);
+}
+
+public function change_password()
+{
+    $this->form_validation->set_rules('old_password','Old Password','required|min_length[6]|max_length[8]');
+    $this->form_validation->set_rules('password','Password','required|min_length[6]|max_length[8]');
+    $this->form_validation->set_rules('cpassword','Confirm Password','required|matches[cpassword]');
+    if($this->form_validation->run()==false){
+        $response=[
+            'status'=>'error',
+            'error'=>$this->form_validation->error_array(),
+        ];
+    }else{
+        $id=$this->security->xss_clean($this->input->post('id'));
+        $password=$this->security->xss_clean($this->input->post('password'));
+        $old_password=$this->security->xss_clean($this->input->post('old_password'));
+        $check = $this->Chat_model->login('id',$id,$old_password);
+        if(!empty($check)){
+
+            $data = array(
+                'password'=>password_hash($password, PASSWORD_BCRYPT),
+                
+    
+            );
+    
+            $users = $this->Chat_model->update_profile($id, $data);
+            if($users){
+                $response=[
+                    'status'=>'success',
+                    'message'=>'Change password successfully.',
+                ];
+            }
+        }else{
+            $response=[
+                'status'=>'success',
+                'message'=>'Old Password not matched.',
+            ];
+        }
+    }
+    echo json_encode($response);
 }
 }

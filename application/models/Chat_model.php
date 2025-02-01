@@ -78,4 +78,9 @@ class Chat_model extends CI_Model {
         ->where("(sender_id = {$sender_id} AND reciever_id = {$user_id}) OR (sender_id = {$user_id} AND reciever_id = {$sender_id})")
         ->update('request',['status'=>$status]);
 	}
+
+	public function update_profile($id, $data)
+	{
+		return $this->db->where('id',$id)->update('chat_users',$data);
+	}
 }

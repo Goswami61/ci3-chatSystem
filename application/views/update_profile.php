@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
+    <title>Update Profile</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
@@ -35,7 +35,23 @@ body{
     margin: 10px;
 }
 
-.container .title{
+a {
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #D64141;
+    padding: 8px 12px;
+    border: 1px solid #D64141;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+    background: #D64141;
+    color: #fff;
+}
+
+/* .container .title{
     padding: 25px;
     background: #f6f8fa;
 }
@@ -54,7 +70,45 @@ body{
     width: 30px;
     height: 3px;
     background: linear-gradient(to right, #F37A65, #D64141);
+} */
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
+
+    .title p {
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+    }
+
+    /* Active user ko center me properly align karne ke liye */
+    .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #D64141;
+}
+
+.user-info .name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
 
 .user_details{
     display: flex;
@@ -236,59 +290,72 @@ form .gender{
 </head>
 <body>
 <div class="container">
-        <div class="title">
-            <p>Sign In</p>
+<div class="title">
+    <div class="user-info">
+        <a href="<?= base_url("dashboard");?>">
+            <img src="<?= base_url("/").$active_user['img'] ?>" alt="Profile pic">
+        </a>
+        <div>
+            <span class="name"><?= $active_user['name']; ?></span>
         </div>
+    </div>
+    <a href="<?= base_url('logout'); ?>">Logout</a>
+</div>
         <div id="successMessage" style="display:none; color:green"></div>
-        <form id="registerUser" enctype="multipart/form-data">
+        <form id="updateUser" enctype="multipart/form-data">
+        <input type="hidden" id="id" name="id" value="<?= $active_user['id'];?>">
             <div class="user_details">
                 <div class="input_box">
                     <label for="name">Username</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your username"><div id="error_name" style="color:red"></div>
+                    <input type="text" id="name" name="name" value="<?= $active_user['name'];?>" placeholder="Enter your username"><div id="error_name" style="color:red"></div>
                 </div>
-                <div class="input_box">
+                <!-- <div class="input_box">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Enter your email"><div id="error_email" style="color:red"></div>
-                </div>
-                <div class="input_box">
+                </div> -->
+                <!-- <div class="input_box">
                     <label for="mobile">Phone Number</label>
                     <input type="text" id="mobile" name="mobile" placeholder="Enter your number"><div id="error_mobile" style="color:red"></div>
-                </div>
+                </div> -->
                 <div class="input_box">
                     <label for="address">Address</label>
-                    <input type="text" id="address" name="address" placeholder="Enter your address"><div id="error_address" style="color:red"></div>
+                    <input type="text" id="address" name="address" value="<?= $active_user['address'];?>" placeholder="Enter your address"><div id="error_address" style="color:red"></div>
                 </div>
-                <div class="input_box">
+                <!-- <div class="input_box">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter your password"><div id="error_password" style="color:red"></div>
                 </div>
                 <div class="input_box">
                     <label for="cpassword">Confirm Password</label>
                     <input type="password" id="cpassword" name="cpassword" placeholder="Confirm your password"><div id="error_cpassword" style="color:red"></div>
-                </div>
-                <!-- <div class="input_box">
-                    <label for="img">Profile</label>
-                    <input type="file" id="img" name="img"><div id="error_img" style="color:red"></div>
                 </div> -->
-
                 <div class="input_box">
+                    <label for="img">Profile</label>
+                    <input type="hidden" id="old_img" name="old_img" value="<?= $active_user['img'];?>">
+                    <input type="file" id="img" name="img"><div id="error_img" style="color:red">
+                    <img src="<?= base_url("/").$active_user['img'];?>" width="100px" height="100px" alt="">
+                    </div>
+                </div>
+
+                <!-- <div class="input_box">
                 <label for="img">Profile</label>
                 <div class="custom-file-upload">
-                    <input type="file" id="img" name="img" accept="image/*" onchange="previewImage(event)">
+                    <input type="file" id="img" name="img" accept="image/*"  onchange="previewImage(event)">
                     <span id="fileLabel">Choose File</span>
                 </div>
                 <div id="error_img" style="color:red"></div>
                 <div class="image-preview">
                     <img id="imgPreview" src="" alt="Profile Preview" style="display:none;">
                 </div>
-            </div>
-
+                <img src="<?= base_url("/").$active_user['img'];?>" width="100px" height="100px" alt="">
+            </div> -->
+            
             </div>
             <div class="gender">
                 <span class="gender_title">Gender</span>
-                <input type="radio" name="gender" id="radio_1" value="male">
-                <input type="radio" name="gender" id="radio_2" value="female">
-                <input type="radio" name="gender" id="radio_3" value="other">
+                <input type="radio" name="gender" id="radio_1" value="male" <?php if($active_user['gender']== "male"){ echo "checked";}?>>
+                <input type="radio" name="gender" id="radio_2" value="female" <?php if($active_user['gender']== "female"){ echo "checked";}?>>
+                <input type="radio" name="gender" id="radio_3" value="other" <?php if($active_user['gender']== "other"){ echo "checked";}?>>
 
                 <div class="category">
                     <label for="radio_1">
@@ -306,17 +373,37 @@ form .gender{
                 </div>
             </div><div id="error_gender" style="color:red"></div>
             <div class="reg_btn">
-                <input type="submit" name="submit" value="Register">
-                If you are allready register. <a href="<?= base_url('login');?>">Login</a>
+                <input type="submit" name="submit" value="Update Profile">
             </div>
-            <!-- <div class="reg_btn">
-                If you are allready register. <a href="#">Login</a>
-            </div> -->
+        </form>
+
+        <!-- Change Password -->
+         <p>Change Password</p>
+         <div id="psuccessMessage" style="display:none; color:green"></div>
+        <form id="changePassword" enctype="multipart/form-data">
+        <input type="hidden" id="id" name="id" value="<?= $active_user['id'];?>">
+            <div class="user_details">
+                <div class="input_box">
+                    <label for="address">Old Password</label>
+                    <input type="text" id="old_password" name="old_password" placeholder="Enter your old password "><div id="error_old_password" style="color:red"></div>
+                </div>
+                <div class="input_box">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password"><div id="error_password" style="color:red"></div>
+                </div>
+                <div class="input_box">
+                    <label for="cpassword">Confirm Password</label>
+                    <input type="password" id="cpassword" name="cpassword" placeholder="Confirm your password"><div id="error_cpassword" style="color:red"></div>
+                </div>
+            </div>
+            <div class="reg_btn">
+                <input type="submit" name="submit" value="Change Password">
+            </div>
         </form>
     </div>
 </body>
 
-<script>
+<!-- <script>
 function previewImage(event) {
     var reader = new FileReader();
     reader.onload = function() {
@@ -330,26 +417,26 @@ function previewImage(event) {
     var fileLabel = document.getElementById('fileLabel');
     fileLabel.textContent = event.target.files[0].name;
 }
-</script>
+</script> -->
 
 <script>
 $(document).ready(function(){
-    $('#registerUser').on('submit',function(e){
+    $('#updateUser').on('submit',function(e){
 
         e.preventDefault();
 
         $('error_name').html(' ');
-        $('error_email').html(' ');
-        $('error_mobile').html(' ');
+        // $('error_email').html(' ');
+        // $('error_mobile').html(' ');
         $('error_address').html(' ');
-        $('error_password').html(' ');
-        $('error_cpassword').html(' ');
+        // $('error_password').html(' ');
+        // $('error_cpassword').html(' ');
         $('error_img').html(' ');
         $('error_gender').html(' ');
         $('successMessage').hide();
         var formData = new FormData(this); // FormData object banaye
         $.ajax({
-            url:'<?php echo base_url('register'); ?>',
+            url:'<?php echo base_url('update-profile'); ?>',
             dataType:'json',
             data:formData,
             type:'POST',
@@ -362,21 +449,21 @@ $(document).ready(function(){
                         $('#error_name').html(response.error.name);
                     }
 
-                    if(response.error.email){
-                        $('#error_email').html(response.error.email);
-                    }
+                    // if(response.error.email){
+                    //     $('#error_email').html(response.error.email);
+                    // }
 
-                    if(response.error.mobile){
-                        $('#error_mobile').html(response.error.mobile);
-                    }
+                    // if(response.error.mobile){
+                    //     $('#error_mobile').html(response.error.mobile);
+                    // }
 
-                    if(response.error.password){
-                        $('#error_password').html(response.error.password);
-                    }
+                    // if(response.error.password){
+                    //     $('#error_password').html(response.error.password);
+                    // }
 
-                    if(response.error.cpassword){
-                        $('#error_cpassword').html(response.error.cpassword);
-                    }
+                    // if(response.error.cpassword){
+                    //     $('#error_cpassword').html(response.error.cpassword);
+                    // }
 
                     if(response.error.img){
                         $('#error_img').html(response.error.img);
@@ -397,7 +484,87 @@ $(document).ready(function(){
                         $('#successMessage').fadeOut();
                     }, 3000);
 
-                    $('#registerUser')[0].reset();
+                    $('#updateUser')[0].reset();
+                }
+            }
+        })
+
+    })
+})
+</script>
+
+<!-- Change Password -->
+
+<script>
+$(document).ready(function(){
+    $('#changePassword').on('submit',function(e){
+
+        e.preventDefault();
+
+        // $('error_name').html(' ');
+        // $('error_email').html(' ');
+        // $('error_mobile').html(' ');
+        // $('error_address').html(' ');
+        $('error_old_password').html(' ');
+        $('error_password').html(' ');
+        $('error_cpassword').html(' ');
+        // $('error_img').html(' ');
+        // $('error_gender').html(' ');
+        $('psuccessMessage').hide();
+        var formData = new FormData(this); // FormData object banaye
+        $.ajax({
+            url:'<?php echo base_url('change-password'); ?>',
+            dataType:'json',
+            data:formData,
+            type:'POST',
+            contentType: false,  
+            processData: false,
+            success:function(response){
+                console.log(response);
+                if(response.status=='error'){
+                    // if(response.error.name){
+                    //     $('#error_name').html(response.error.name);
+                    // }
+
+                    // if(response.error.email){
+                    //     $('#error_email').html(response.error.email);
+                    // }
+
+                    // if(response.error.mobile){
+                    //     $('#error_mobile').html(response.error.mobile);
+                    // }
+
+                    if(response.error.old_password){
+                        $('#error_old_password').html(response.error.old_password);
+                    }
+                    if(response.error.password){
+                        $('#error_password').html(response.error.password);
+                    }
+
+                    if(response.error.cpassword){
+                        $('#error_cpassword').html(response.error.cpassword);
+                    }
+
+                    // if(response.error.img){
+                    //     $('#error_img').html(response.error.img);
+                    // }
+
+                    // if(response.error.address){
+                    //     $('#error_address').html(response.error.address);
+                    // }
+
+                    // if(response.error.gender){
+                    //     $('#error_gender').html(response.error.gender);
+                    // }
+
+                }else if(response.status=='success'){
+                    $('#psuccessMessage').html(response.message).show();
+
+                    setTimeout(() => {
+                        $('#psuccessMessage').fadeOut();
+                    }, 3000);
+
+                    $('#changePassword')[0].reset();
                 }
             }
         })

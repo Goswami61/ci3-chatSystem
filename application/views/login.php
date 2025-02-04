@@ -260,6 +260,11 @@ $(document).ready(function(){
                     // $('#loginUser')[0].reset();
 
                    
+                }else if(response.status=='unauthorized'){
+                    $('#successMessage').html(response.message).show();
+                    setTimeout(() => {
+                        $('#successMessage').fadeOut();
+                    }, 3000);
                 }
             }
         })

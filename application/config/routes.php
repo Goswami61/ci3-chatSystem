@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = TRUE;
 
 $route['default_controller'] = 'Chat_controller/index';
 $route['register'] = 'Chat_controller/register';
@@ -72,3 +72,15 @@ $route['update-profile'] = 'Chat_controller/update_profile';
 // Change Password
 
 $route['change-password'] = 'Chat_controller/change_password';
+
+// Api 
+
+$route['api/register-user'] = 'Api/index';
+$route['api/login'] = 'Api/login';
+$route['api/dashboard'] = 'Api/dashboard';
+$route['api/get-message'] = 'Api/get_message';
+$route['api/send-message'] = 'Api/send_message';
+$route['api/get-user'] = 'Api/get_user';
+$route['api/update-profile'] = 'Api/update_profile';
+$route['api/change-password'] = 'Api/change_password';
+// print_r($route); exit;

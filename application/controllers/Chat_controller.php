@@ -21,7 +21,7 @@ class Chat_controller extends CI_Controller {
 		$this->form_validation->set_rules('email','Email','required|valid_email|is_unique[chat_users.email]');
 		$this->form_validation->set_rules('mobile','Mobile','required|is_unique[chat_users.mobile]');
 		$this->form_validation->set_rules('password','Password','required|min_length[6]|max_length[8]');
-		$this->form_validation->set_rules('cpassword','Confirm Password','required|matches[cpassword]');
+		$this->form_validation->set_rules('cpassword','Confirm Password','required|matches[password]');
 		$this->form_validation->set_rules('address','Address','required');
 		$this->form_validation->set_rules('gender','Gender','required');
         $this->form_validation->set_rules('img','image','callback_img_error');
@@ -31,6 +31,7 @@ class Chat_controller extends CI_Controller {
                 'error'=>$this->form_validation->error_array(),
             ];
         }else{
+            $token = bin2hex(random_bytes(32));
             $name=$this->security->xss_clean($this->input->post('name'));
             $email=$this->security->xss_clean($this->input->post('email'));
             $mobile=$this->security->xss_clean($this->input->post('mobile'));
@@ -45,7 +46,8 @@ class Chat_controller extends CI_Controller {
                 'password'=>password_hash($password, PASSWORD_BCRYPT),
                 'address'=>$address,
                 'gender'=>$gender,
-                'img'=>$this->image
+                'img'=>$this->image,
+                'token'=> $token 
 
             );
 
@@ -115,7 +117,7 @@ class Chat_controller extends CI_Controller {
                 ];
             }else{
                 $response=[
-                    'status'=>'success',
+                    'status'=>'unauthorized',
                     'message'=>'Credential Not Matched.',
                     // 'redirect'=> base_url('dashboard'),
                 ];

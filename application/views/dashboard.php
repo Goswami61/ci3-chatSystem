@@ -221,17 +221,17 @@ a:hover {
                     <td><img src="<?= base_url("/").$list['img'];?>" alt="profile"></td>
                     <td><span class="name"><?= $list['name']?></span></td>
                     <td><button type="button" data-id="<?= $list['id']?>" class="reg_btn">Chat</button></td>
-                     <!-- <?php if($list['req_status']==1){ if($list['sender_id']== $_SESSION['users']->id){?>
+                     <!-- <?php //if($list['req_status']==1){ if($list['sender_id']== $_SESSION['users']->id){?>
                         <td><button data-id="<?= $list['id']?>" data-sender_id ="<?= $_SESSION['users']->id?>" data-status="3" class="req_btn">Cancle</button></td>
-                        <?php } else{?>
+                        <?php //} else{?>
                             <td><button data-id="<?= $list['id']?>" data-sender_id ="<?= $_SESSION['users']->id?>" data-status="2" class="req_btn">Accept</button> 
                             <button data-id="<?= $list['id']?>" data-sender_id ="<?= $_SESSION['users']->id?>" data-status="3" class="req_btn">Reject</button></td>
-                        <?php } }else if($list['req_status']==2){?>
+                        <?php// } }else if($list['req_status']==2){?>
                     <td><button data-id="<?= $list['id']?>" class="reg_btn">Chat</button></td>
-                    <?php } else{?>
+                    <?php //} else{?>
                     <td><button data-id="<?= $list['id']?>" data-sender_id ="<?= $_SESSION['users']->id?>" data-status="1" class="req_btn">Request</button></td>
                     <?php //}
-                 }?> -->
+               //  }?> -->
                 </tr>
                 <?php } ?>
             </tbody>
